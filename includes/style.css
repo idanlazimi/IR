@@ -1,0 +1,171 @@
+/* may_now copy*/
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  background: #fff;
+}
+#page-wrapper {
+
+  float:left;
+  min-width: 700px;
+  background: #FFF;
+  padding: 1em;
+  min-height: 500px;
+  /*box-shadow: 0 2px 10px rgba(0,0,0,0.8);*/
+  border-radius:10px;
+  margin-right:10px;
+}
+li{
+list-style-type: none;
+}
+#secondDiv
+{
+
+  min-width: 550px;
+  background: #FFF;
+  padding: 1em;
+  min-height: 500px;
+  /*box-shadow: 0 2px 10px rgba(0,0,0,0.8);*/
+  border-radius:10px;
+  float:left;
+
+ 
+}
+
+#container_div{
+	overflow:hidden;
+}
+#help
+{
+	text-align:center;
+	position:relative;
+	margin-top:20px;
+	margin-bottom:20px;
+	margin-left: 10px;
+	min-width:40px;
+	min-height:40px;
+	border: none;
+	float: left;
+}
+
+#admin
+{
+	text-align:center;
+	position:relative;
+	margin-top:20px;
+	margin-bottom:20px;
+	margin-left: 10px;
+	min-width:40px;
+	min-height:40px;
+	border: none;
+	float: left;
+}
+#liteBoxDiv
+{
+	width:100%;
+	margin-right:6vw;
+	margin-bottom: 20px;
+    display:flex;
+	justify-content: center;
+}
+#liteboxInfo{
+	position:absolute;
+	width:720px;
+	height:480px;
+    margin-top: 6vh;
+	border:1px solid black;
+	border-radius: 5px;
+	background: #ccccff;
+    font-size: 0.84em;
+    z-index: 10;
+    margin-left: 270px;
+}
+
+#refreshButton
+{
+	float:right;
+}
+#exitInfoDetails
+{
+	background-color:#6666ff;
+}
+#documentAdded
+{
+  width: 350px;
+  background: #ccccff;
+  min-height: 100px;
+  margin-top:10px;
+  border:2px double;
+  float: right;
+  border-radius:10px;
+}
+#searchButton
+{
+	min-width:32px;
+	min-height:32px;
+	margin-left:5px;
+	border:none;
+}
+
+#top_div{
+	
+	display:block;
+	overflow:hidden;
+	width:100%;
+}
+
+
+#addOneFile{
+	
+	display:none;
+}
+#deleteDoc{
+	border-radius:10px;
+	background-color:#6666ff;
+}
+
+#helpPre
+{
+	font-size:16px; 
+	margin-left:10px;
+	font-family:"Times New Roman";
+}
+
+#addFiles
+{
+	margin-top:20px;
+	margin-left:20px;
+	vertical-align: top;
+	display:inline;
+    vertical-align: middle;
+	display:none;
+}
+#deleteDB{
+	
+	margin-left:20px;
+	position:relative;
+	vertical-align: top;
+    vertical-align: middle;
+	display:none;
+
+}
+#allDocument{
+  width: 450px;
+  background:#FFFFFF;
+  min-height: 100px;
+  margin-top:5px;
+  float: right;
+  position:relative;
+}
+#titleSecondDiv
+{
+	margin-left: 74px;
+}
+h1 {
+	margin-top: 0;
+}
+#fileDisplayArea {
+  margin-top: 2em;
+  width: 100%;
+  overflow-x: auto;
+}

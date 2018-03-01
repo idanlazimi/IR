@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--maybe now copy -->
+<head>
+	<meta charset="utf-8">
+	<title>Information retrieval project</title>
+	<link rel="stylesheet" href="includes/style.css">
+	<script src="includes/jquery-2.1.4.min.js"></script>
+	<script src="includes/text.js"></script>
+</head>
+<body> 
+
+	<div id="top_div">
+		<input id="help" type="button" style = "background:url(images/information.png)" title="information"> 
+		<input id="admin" type="button" style = "background:url(images/admin.png)" title="administrator">
+	</div>
+	<input id="addOneFile" type="button" value="Add file">  
+	<input type="file" id="fileInput" style="display:none">
+	<input id="deleteDB" type="button" value="delete DB">
+	<!--<input id="addFiles" type="button" value="Add Documents">-->
+	<div id="liteBoxDiv">
+	<input id="searchLine" type="text" name="fullName" required  value="" maxlength="50"><br>
+	<input type="button" id="searchButton" style = "background:url(images/search.png)" title="search"> 
+	</div>
+	<!--<input id="help" type="button" value="Help"> -->
+
+	<div id="page-wrapper">
+		
+		<div id="documentAdded"><p> &nbsp  Attached documents</p> </div>
+		<div id="testArea">
+			
+			
+			
+			
+		</div>
+		<h3>Results :</h3>
+	</div>
+	<div id="secondDiv">
+		<h4 id="titleSecondDiv">The Full Document</h4>
+		<div id="allDocument">
+		</div>
+	</div>
+			<script> 
+            	(function(){
+            		start();
+     	  			 })(); 
+		    </script>
+</body>
+</html>
