@@ -52,7 +52,7 @@ window.onload = function() {
     			  { 
     			  	    getRowDelete1 = function(val)
     					{
-        				PROJINFORET.transaction(function(transaction) {
+        				myDatabase.transaction(function(transaction) {
               			transaction.executeSql('DELETE FROM Document WHERE idDoc = ?;', [val], printRowDocDetails, errorHandler);
               			transaction.executeSql('DELETE FROM IndexFile WHERE idDoc = ?;', [val], printRowDocDetails, errorHandler);
        				 	});
@@ -366,7 +366,7 @@ window.onload = function() {
     //treat the option that have the same operator for example (word1 && word2) && word3 
     function sameOperator(word1,word2,word3,flag)
     {
-    	PROJINFORET.transaction(function (tx) {
+    	myDatabase.transaction(function (tx) {
 				var newBuzzWord=[];
 				newBuzzWord=wordSearch.split(/[&&()|| ]+/);
 				if(flagBrackets==1)
@@ -406,7 +406,7 @@ window.onload = function() {
 	         			 }
 	    	   			var getSameOp = function(val)
 	    				{
-	        			PROJINFORET.transaction(function(transaction) {
+	        			myDatabase.transaction(function(transaction) {
 	              		transaction.executeSql('SELECT * FROM IndexFile WHERE word = ?;', [val], printSameOp, errorHandler);
 	       				});
 	   			 		};
@@ -451,7 +451,7 @@ window.onload = function() {
     //AND first
     function andFirstBracketFirst(word1,word2,word3)
     {
-    	PROJINFORET.transaction(function (tx) {
+    	myDatabase.transaction(function (tx) {
 				var newBuzzWord=[];
 				newBuzzWord=wordSearch.split(/[&&()|| ]+/);
 				if(flagBrackets==1)
@@ -484,7 +484,7 @@ window.onload = function() {
     	   				numberDocNew = findDuplicate(numberDoc);
 	    	   			var getFirstFirst = function(val)
 	    				{
-	        			PROJINFORET.transaction(function(transaction) {
+	        			myDatabase.transaction(function(transaction) {
 	              		transaction.executeSql('SELECT * FROM IndexFile WHERE word = ?;', [val], printFirstFirst, errorHandler);
 	       				});
 	   			 		};
@@ -518,7 +518,7 @@ window.onload = function() {
     //or first
     function andFirstBraketsSecond(word1,word2,word3)
     {
-    	PROJINFORET.transaction(function (tx) {
+    	myDatabase.transaction(function (tx) {
 				var newBuzzWord=[];
 				newBuzzWord=wordSearch.split(/[&&()|| ]+/);
 				if(flagBrackets==2)
@@ -551,7 +551,7 @@ window.onload = function() {
     	   				numberDocNew = noDuplicate(numberDoc);
 	    	   			var getFirstSecond = function(val)
 	    				{
-	        			PROJINFORET.transaction(function(transaction) {
+	        			myDatabase.transaction(function(transaction) {
 	              		transaction.executeSql('SELECT * FROM IndexFile WHERE word = ?;', [val], printFirstSecond, errorHandler);
 	       				});
 	   			 		};
@@ -585,7 +585,7 @@ window.onload = function() {
     //one word searching
         function  oneWordQuery(wordBuzz)
         {
-        		PROJINFORET.transaction(function (tx) {
+        		myDatabase.transaction(function (tx) {
             		tx.executeSql('SELECT * FROM IndexFile WHERE word = ?;', [wordBuzz], function (tx, results) {
             		if (results.rows.length == 0)
              			{
@@ -613,7 +613,7 @@ window.onload = function() {
         //or operator
         function  orQuery()
         {
-        	PROJINFORET.transaction(function (tx) {
+        	myDatabase.transaction(function (tx) {
 			var firstParse=[];
 			firstParse=wordSearch.split(/[||)(! ]+/);
 			if(arrQueue[0] != '!')
@@ -661,7 +661,7 @@ window.onload = function() {
         //not operator
         function  notQuery()
         {
-        	PROJINFORET.transaction(function (tx) {
+        	myDatabase.transaction(function (tx) {
 			for(var i=1; i<checkWord.length;i++)
 					{
 						wordBuzz[i-1]=checkWord[i];
@@ -691,7 +691,7 @@ window.onload = function() {
         {
         	  	 var getNotRow = function()
 	    				{
-	        			PROJINFORET.transaction(function(transaction) {
+	        			myDatabase.transaction(function(transaction) {
 	              		transaction.executeSql('SELECT * FROM Document', [], printNotDetails, errorHandler);
 	       				});
 	   			 		};
@@ -751,7 +751,7 @@ window.onload = function() {
         //and operator   
         function andQuery()
         {
-        	PROJINFORET.transaction(function (tx) {
+        	myDatabase.transaction(function (tx) {
         	var firstParse=[];
 			firstParse=wordSearch.split(/[&&)(! ]+/);
 			if(arrQueue[0] != '!')
@@ -798,7 +798,7 @@ window.onload = function() {
         //print the  result of the querys
         var getAndRow = function(val)
     	{
-        	PROJINFORET.transaction(function(transaction) {
+        	myDatabase.transaction(function(transaction) {
             transaction.executeSql('SELECT * FROM Document WHERE idDoc = ?;', [val], printAndDetails, errorHandler);
        		});
    		};
@@ -889,7 +889,7 @@ window.onload = function() {
 	{
 		var fileDisplayArea3 = document.createElement('PRE');
 		var noResult = document.createElement("B");
-		var title = document.createTextNode("There is no results." +"\n"); 
+		var title = document.createTextNode("There are no results." +"\n"); 
 		noResult.appendChild(title);
 		fileDisplayArea3.appendChild(noResult); 
 		wrapper.appendChild(fileDisplayArea3); 
@@ -924,11 +924,11 @@ window.onload = function() {
 	 	   if (!window.openDatabase) {
 	        alert('Databases are not supported in this browser.');
 	 	   } else {
-	        var shortName = 'PROJINFORET';
+	        var shortName = 'myDatabase';
 	        var version = '1.0';
-	        var displayName = 'PROJINFORET Database';
+	        var displayName = 'myDatabase Database';
 	        var maxSize = 100000; //  bytes
-	        PROJINFORET= openDatabase(shortName, version, displayName, maxSize);
+	        myDatabase= openDatabase(shortName, version, displayName, maxSize);
 			createTables();
 	 	   }
 		} catch(e) {
@@ -942,7 +942,7 @@ window.onload = function() {
 	}
 }
 	function createTables(){
-			PROJINFORET.transaction(
+			myDatabase.transaction(
        		 function (transaction)
        		  {
         		transaction.executeSql('CREATE TABLE IF NOT EXISTS IndexFile(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
@@ -951,21 +951,21 @@ window.onload = function() {
    			);
 	}
 	  function addIndexFile(idDoc,word,hits){
-	PROJINFORET.transaction(
+	myDatabase.transaction(
 	    function (transaction) {
 				transaction.executeSql('INSERT INTO IndexFile (idDoc, word, hits) VALUES (?, ?, ?)', [idDoc, word, hits]);	
 	    }
 	);
 }
 	  function addDocument(idDoc,name,author,summery,link){
-	PROJINFORET.transaction(
+	myDatabase.transaction(
 	    function (transaction) {
 				transaction.executeSql('INSERT INTO Document (idDoc, name, author, summery, link) VALUES (?, ?, ?, ?, ?)', [idDoc, name, author, summery, link]);	
 	    }
 	);
 }	
 	function sortAll(){
-	PROJINFORET.transaction(
+	myDatabase.transaction(
 	    function (transaction) {
 	  transaction.executeSql('CREATE TABLE IF NOT EXISTS IndexFile2(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("INSERT INTO IndexFile2 (idDoc, word, hits) SELECT * FROM IndexFile ORDER BY lower(word);", [],this.nullDataHandler, this.errorHandler);
@@ -975,7 +975,7 @@ window.onload = function() {
 	);
 }
 	function sortAll2(){
-	PROJINFORET.transaction(
+	myDatabase.transaction(
 	    function (transaction) {
 	  transaction.executeSql('CREATE TABLE IndexFile(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("INSERT INTO IndexFile (idDoc, word, hits) SELECT * FROM IndexFile2 ORDER BY lower(word);", [],this.nullDataHandler, this.errorHandler);
@@ -984,7 +984,7 @@ window.onload = function() {
 	);
 }
 	function dropTables(){
-	PROJINFORET.transaction(
+	myDatabase.transaction(
 	    function (transaction) {
 	    	transaction.executeSql("DROP TABLE IndexFile;", [], this.nullDataHandler, this.errorHandler);
 	    	transaction.executeSql("DROP TABLE Document;", [], this.nullDataHandler, this.errorHandler);
