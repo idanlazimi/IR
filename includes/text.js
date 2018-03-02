@@ -128,9 +128,10 @@ window.onload = function() {
 				   var pass1="admin";
 				   password=prompt('Enter Password:');
 					if (password==pass1){
-						document.getElementById("addOneFile").style.display = "block";
-						document.getElementById("deleteDB").style.display = "block";
-						document.getElementById("fileInput").style.display = "block";
+						document.getElementById("addOneFile").style.display = "table-cell";
+						
+						document.getElementById("deleteDB").style.display = "inline-block";
+						document.getElementById("fileInput").style.display = "inline-block";
 						//alert("correct!")
 					 }
 					else {
@@ -143,7 +144,7 @@ window.onload = function() {
         });
 	//help button
 	document.getElementById("help").addEventListener("click",function(){
-		   $('#liteBoxDiv').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>Explanation About The Application:</h4>Before adding using you have to delete the Data base,you doing this by pressing on button "Delete DB",<br>in addition you need to add the stopList File by select the file(and that it) now you can add files(documents). <br>Before adding Documents,you need to select them by pressing on button "בחר קובץ",<br>if you want to select more documents you doing the same.<br>When you select all documents that you want to add,press on button "Add Documents"<br>to add documents to data base.<br>If you want to delete document you need to press on button "delete" near the name <br>of the document under "Attached Documents" window.<br>To add add one more file,select file and press on button "Add one file".<br>To search documents,write one from the list of option in the textbox and press "search".<br>Option to search:<br> - one word<br> - word1 || word2 - or operator <br> - word1 && word2 - and operator<br> - ! word <br> - (w1 && w2) || w3 - you can change the operator and the brackets<br>like this - w1 ||(w2 || w3)<br> - ! (w1 && w2)<br>It is better to write space before and after operator<br>There is a several words in a stop list.<br>To see the documents with the highlighting word press on button "show".<br>If you want the document press on the link "link to document".</pre> </div>');
+		   $('#page-wrapper').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>About</h4>Before adding using you have to delete the Data base,you doing this by pressing on button "Delete DB",<br>in addition you need to add the stopList File by select the file(and that it) now you can add files(documents). <br>Before adding Documents,you need to select them by pressing on button "בחר קובץ",<br>if you want to select more documents you doing the same.<br>When you select all documents that you want to add,press on button "Add Documents"<br>to add documents to data base.<br>If you want to delete document you need to press on button "delete" near the name <br>of the document under "Attached Documents" window.<br>To add add one more file,select file and press on button "Add one file".<br>To search documents,write one from the list of option in the textbox and press "search".<br>Option to search:<br> - one word<br> - word1 || word2 - or operator <br> - word1 && word2 - and operator<br> - ! word <br> - (w1 && w2) || w3 - you can change the operator and the brackets<br>like this - w1 ||(w2 || w3)<br> - ! (w1 && w2)<br>It is better to write space before and after operator<br>There is a several words in a stop list.<br>To see the documents with the highlighting word press on button "show".<br>If you want the document press on the link "link to document".</pre> </div>');
                     $('#liteboxInfo').fadeIn();
                         $('#exitInfoDetails').click(function(){
                             $('#liteboxInfo').fadeOut(function(){ 

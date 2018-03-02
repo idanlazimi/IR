@@ -7,7 +7,7 @@ html {
 #page-wrapper {
 
   float:left;
-  min-width: 700px;
+  min-width: 467px;
   background: #FFF;
   padding: 1em;
   min-height: 500px;
@@ -69,16 +69,16 @@ list-style-type: none;
 	justify-content: center;
 }
 #liteboxInfo{
+	z-index:1;
 	position:absolute;
 	width:720px;
 	height:480px;
-    margin-top: 6vh;
+    margin-top: -26vh;
 	border:1px solid black;
 	border-radius: 5px;
-	background: #ccccff;
+	background: #ededf5;
     font-size: 0.84em;
-    z-index: 10;
-    margin-left: 270px;
+    margin-left: 314px;
 }
 
 #refreshButton
@@ -87,7 +87,7 @@ list-style-type: none;
 }
 #exitInfoDetails
 {
-	background-color:#6666ff;
+	background-color:#ededf5;
 }
 #documentAdded
 {
@@ -109,7 +109,8 @@ list-style-type: none;
 
 #top_div{
 	
-	display:block;
+	position:relative;
+	display:table;
 	overflow:hidden;
 	width:100%;
 }
@@ -117,8 +118,32 @@ list-style-type: none;
 
 #addOneFile{
 	
+	margin-left:349px;
+	margin-bottom:23px;
+	position:absolute;
+	bottom: 0;
 	display:none;
 }
+
+#fileInput{
+	
+	margin-left:47px;
+	margin-bottom:23px;
+	position:absolute;
+	bottom: 0;
+	display:none;
+}
+
+#deleteDB{
+	
+	margin-left:508px;
+	margin-bottom:23px;
+	position:absolute;
+	bottom: 0;
+	display:none;
+
+}
+
 #deleteDoc{
 	border-radius:10px;
 	background-color:#6666ff;
@@ -131,6 +156,8 @@ list-style-type: none;
 	font-family:"Times New Roman";
 }
 
+
+
 #addFiles
 {
 	margin-top:20px;
@@ -140,15 +167,7 @@ list-style-type: none;
     vertical-align: middle;
 	display:none;
 }
-#deleteDB{
-	
-	margin-left:20px;
-	position:relative;
-	vertical-align: top;
-    vertical-align: middle;
-	display:none;
 
-}
 #allDocument{
   width: 450px;
   background:#FFFFFF;
