@@ -1,7 +1,9 @@
 //maybe_now copy
 var start = function(){
 	var documentArray = [],filePathInput,fileName,lines,nameDoc,nameAuthor,arrayName=[],arrayAuthor=[],file,string,stopListArray=[];
-	var arraySummery=[],countDocResult=0,counterAddDoc=0,arrayDownloadName=[], uniqueWords = [],idCounter=1,flagShow=0;
+	var idCounter = 1
+	//localStorage.setItem("idCounter", idCounter);
+	var arraySummery=[],countDocResult=0,counterAddDoc=0,arrayDownloadName=[], uniqueWords = [],idCounter,flagShow=0;
 	var paraShow = document.getElementById('allDocument');
 	var wrapper = document.getElementById('page-wrapper');
 	var fileDisplayArea1 = document.getElementById('fileDisplayArea');
@@ -120,6 +122,29 @@ window.onload = function() {
 	element.click();
 	document.body.removeChild(element);
 	}
+
+	function deleteFile(file_name)
+	{
+			$.ajax({
+				url:'delete.php',
+				data:('C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\' + file_name),
+				method:'GET',
+				success:function(response){
+				 if (response === 'deleted')
+				 {
+					alert('Deleted !!');
+				 }
+				}
+			});
+	}
+	function moveFile(srcFile,dest){
+	
+		var object = new ActiveXObject("Scripting.FileSystemObject");
+		var file = object.GetFile(srcFile);
+		file.Move(dest);
+		document.write("File is moved successfully");
+		
+	}
 	//display admin options
 		document.getElementById("admin").addEventListener("click", function() {
 				var user1="admin";
@@ -179,6 +204,7 @@ window.onload = function() {
 	 document.getElementById("addOneFile").addEventListener("click",function(){
 	 		//splite the string  to word
 	  			var words=splitToWord(string);
+				//var idCounter = localStorage.getItem("idCounter");
 	  			//array with unique word not duplicate
 				 var uniqueArr= uniqueWordFunc(words);
 				//the number of performances
@@ -190,10 +216,16 @@ window.onload = function() {
 					addIndexFile(idCounter,uniqueArr[j],perf[uniqueArr[j]]);
 					}			 
    				 }
-				addDocument(idCounter,nameDoc,nameAuthor,lines[3] + "\n" + lines[4] + "\n" + lines[5] + "\n",("http://127.0.0.1:8020/Information%20retrieval/storage/" + fileName));
+				addDocument(idCounter,nameDoc,nameAuthor,lines[3] + "\n" + lines[4] + "\n" + lines[5] + "\n",("file:///C:/Users/Dell/Downloads/" + fileName));
 	 			sortAll();
 	 			downloadFile(fileName,string);
+				var loc = window.location.pathname;
+				var dir = loc.substring(0, loc.lastIndexOf('/'));
+				//alert("C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\" + fileName);
+				//moveFile("C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\" + fileName, "C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\storage\\");
+				deleteFile(fileName);
 	 			idCounter++;
+				//localStorage.setItem("idCounter",idCounter);
 	 });
 	 //delete the data in DB
 	  document.getElementById("deleteDB").addEventListener("click",function(){
@@ -224,7 +256,7 @@ window.onload = function() {
 			}
 			if(wordSearch.includes("!") && checkWord[0]=='' && (checkWord.length == 2) )
 			{
-				alert(notQuery());	
+				notQuery();	
 			}
 			if( ( (wordSearch.includes("&&") && wordSearch.includes("||") ) || 
 			(wordSearch.includes("&&") && wordSearch.includes("&&")) || 
@@ -948,10 +980,11 @@ window.onload = function() {
        		  {
         		transaction.executeSql('CREATE TABLE IF NOT EXISTS IndexFile(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
         		transaction.executeSql('CREATE TABLE IF NOT EXISTS Document(idDoc INTEGER NOT NULL,name TEXT NOT NULL,author TEXT NOT NULL,summery TEXT NOT NULL,link TEXT NOT NULL);', [], this.nullDataHandler, this.errorHandler);
+				//alert('after create tables');
        		 }
    			);
 	}
-	  function addIndexFile(idDoc,word,hits){
+	function addIndexFile(idDoc,word,hits){
 	myDatabase.transaction(
 	    function (transaction) {
 				transaction.executeSql('INSERT INTO IndexFile (idDoc, word, hits) VALUES (?, ?, ?)', [idDoc, word, hits]);	
@@ -971,6 +1004,7 @@ window.onload = function() {
 	  transaction.executeSql('CREATE TABLE IF NOT EXISTS IndexFile2(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("INSERT INTO IndexFile2 (idDoc, word, hits) SELECT * FROM IndexFile ORDER BY lower(word);", [],this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("DROP TABLE IndexFile;", [], this.nullDataHandler, this.errorHandler);
+			//alert('after sort');
 	        sortAll2();
 	    }
 	);
@@ -981,6 +1015,7 @@ window.onload = function() {
 	  transaction.executeSql('CREATE TABLE IndexFile(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("INSERT INTO IndexFile (idDoc, word, hits) SELECT * FROM IndexFile2 ORDER BY lower(word);", [],this.nullDataHandler, this.errorHandler);
 	        transaction.executeSql("DROP TABLE IndexFile2;", [], this.nullDataHandler, this.errorHandler);
+			//alert('after sort 2');
 	    }
 	);
 }
@@ -997,6 +1032,8 @@ window.onload = function() {
 	console.log('Oops. Error was '+error.message+' (Code '+error.code+')');
 	return true;
 	}
+	
+
  }
 };
 
