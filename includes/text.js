@@ -37,7 +37,7 @@ window.onload = function() {
 	  			//add author of doc to author array
 	  			arrayAuthor.push(nameAuthor);
 	  			//add description to description array
-	  			arraySummery.push(lines[3] + "\n" + lines[4] + "\n" + lines[5] + "\n");
+	  			//arraySummery.push(lines[3] + "\n" + lines[4] + "\n" + lines[5] + "\n");
 	  			arrayDownloadName.push(fileName);
 	  			//add the document to array
 				documentArray.push(string);
@@ -169,37 +169,13 @@ window.onload = function() {
         });
 	//help button
 	document.getElementById("help").addEventListener("click",function(){
-		   $('#page-wrapper').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>About</h4>Before adding using you have to delete the Data base,you doing this by pressing on button "Delete DB",<br>in addition you need to add the stopList File by select the file(and that it) now you can add files(documents). <br>Before adding Documents,you need to select them by pressing on button "בחר קובץ",<br>if you want to select more documents you doing the same.<br>When you select all documents that you want to add,press on button "Add Documents"<br>to add documents to data base.<br>If you want to delete document you need to press on button "delete" near the name <br>of the document under "Attached Documents" window.<br>To add add one more file,select file and press on button "Add one file".<br>To search documents,write one from the list of option in the textbox and press "search".<br>Option to search:<br> - one word<br> - word1 || word2 - or operator <br> - word1 && word2 - and operator<br> - ! word <br> - (w1 && w2) || w3 - you can change the operator and the brackets<br>like this - w1 ||(w2 || w3)<br> - ! (w1 && w2)<br>It is better to write space before and after operator<br>There is a several words in a stop list.<br>To see the documents with the highlighting word press on button "show".<br>If you want the document press on the link "link to document".</pre> </div>');
+		   $('#page-wrapper').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>About</h4>On page refresh - Sign in as admin and click "delete DB" button.<br> sign in again to upload stopList files by clicking "choose file" and then "upload file".<br>After stopList is uploaded, start uploading files in the same way.<br>Search Options::<br> - single_word<br> - word1 || word2 (word1 OR word2) <br> - word1 && word2 (word1 AND word2))<br> - !word (not operator) <br> - (w1 && w2) || w3 <br>w1 ||(w2 || w3)<br> - ! (w1 && w2)<br></pre> </div>');
                     $('#liteboxInfo').fadeIn();
                         $('#exitInfoDetails').click(function(){
                             $('#liteboxInfo').fadeOut(function(){ 
                                 $(this).remove(); });
                         });
 		});
-	// add all the documents to DB
-	 //document.getElementById("addFiles").addEventListener("click",function(){
-	 	// for(var i=0;i<documentArray.length;i++)
-	 	// {
-	 			//splite the string  to word
-	  			// var words=splitToWord(documentArray[i]);
-	  			//array with unique word not duplicate
-				 // var uniqueArr= uniqueWordFunc(words);
-				//the number of performances
-	  			// var perf=performances(words);	
-	  			 // for (j=0; j<uniqueArr.length; j++) 
-   				 // {
-   				 	// var uWord=uniqueArr[j];
-					// if(perf[uniqueArr[j]]!=null && uWord!='') 
-					// {
-						// addIndexFile(idCounter,uWord,perf[uniqueArr[j]]);
-					// }			 
-   				 // }
-			// addDocument(idCounter,arrayName[i],arrayAuthor[i],arraySummery[i],("http://127.0.0.1:8020/Information%20retrieval/storage/" + arrayDownloadName[i]));
-			// idCounter++;
-	 		// downloadFile(arrayDownloadName[i],documentArray[i]);
-	 	//}
-	 	//sortAll();
-	 //});
 	 //add one documents to Db
 	 document.getElementById("addOneFile").addEventListener("click",function(){
 	 		//splite the string  to word
@@ -840,7 +816,7 @@ window.onload = function() {
         	for(var i = 0; i < results.rows.length; i++)
         	{
              var rowDoc = results.rows.item(i);
-            printLinks(rowDoc['idDoc'],rowDoc['name'],rowDoc['author'],rowDoc['summery'],rowDoc['link']);             
+            printLinks(rowDoc['idDoc'],rowDoc['name'],rowDoc['author'],/*rowDoc['summery'],*/rowDoc['link']);             
          	}
    		};  
    		//print the result to ui
@@ -863,7 +839,7 @@ window.onload = function() {
 					var authorB = document.createElement("B");               
 					var authorText = document.createTextNode(author +"\n");
 					//summery of the doc and attach it to paragraph
-					var details = document.createTextNode(summery);
+					//var details = document.createTextNode(summery);
 					//create button
 					var button = document.createElement("input");
    					button.type = "button";
@@ -907,7 +883,7 @@ window.onload = function() {
 					fileDisplayArea2.appendChild(nameB);
 					authorB.appendChild(authorText);
 					fileDisplayArea2.appendChild(authorB);
-					fileDisplayArea2.appendChild(details);
+					//fileDisplayArea2.appendChild(details);
    					fileDisplayArea2.appendChild(button);
    					fileDisplayArea2.appendChild(a);
    				 	wrapper.appendChild(fileDisplayArea2);
@@ -979,7 +955,7 @@ window.onload = function() {
        		 function (transaction)
        		  {
         		transaction.executeSql('CREATE TABLE IF NOT EXISTS IndexFile(idDoc INTEGER NOT NULL,word TEXT NOT NULL,hits INTEGER NOT NULL);', [], this.nullDataHandler, this.errorHandler);
-        		transaction.executeSql('CREATE TABLE IF NOT EXISTS Document(idDoc INTEGER NOT NULL,name TEXT NOT NULL,author TEXT NOT NULL,summery TEXT NOT NULL,link TEXT NOT NULL);', [], this.nullDataHandler, this.errorHandler);
+        		transaction.executeSql('CREATE TABLE IF NOT EXISTS Document(idDoc INTEGER NOT NULL,name TEXT NOT NULL,author TEXT NOT NULL,link TEXT NOT NULL);', [], this.nullDataHandler, this.errorHandler);
 				//alert('after create tables');
        		 }
    			);
@@ -994,10 +970,10 @@ window.onload = function() {
 	  function addDocument(idDoc,name,author,summery,link){
 	myDatabase.transaction(
 	    function (transaction) {
-				transaction.executeSql('INSERT INTO Document (idDoc, name, author, summery, link) VALUES (?, ?, ?, ?, ?)', [idDoc, name, author, summery, link]);	
+				transaction.executeSql('INSERT INTO Document (idDoc, name, author, link) VALUES (?, ?, ?, ?)', [idDoc, name, author, link]);	
 	    }
 	);
-}	
+	}	
 	function sortAll(){
 	myDatabase.transaction(
 	    function (transaction) {
