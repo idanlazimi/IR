@@ -111,26 +111,23 @@ var start = function () {
 			document.body.removeChild(element);
 		}
 
-		function deleteFile(file_name) {
+		function my_copy(_src,_dest) {
 			$.ajax({
-				url: 'delete.php',
-				data: ('C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\' + file_name),
-				method: 'GET',
+				url: 'http://localhost:81/maybe_now/information%20retrieval/delete.php',
+				data: {src : _src, dest: _dest},
+				dataType: "json",
+				method: 'POST',
 				success: function (response) {
-					if (response === 'deleted') {
-						alert('Deleted !!');
+					if (response === 'true') {
+						alert('Copied !!');
+					}
+					else{
+						alert('Copy Failed\n' + 'src: ' + src + '\n' + 'dest: ' + dest );
 					}
 				}
 			});
 		}
-		function moveFile(srcFile, dest) {
 
-			var object = new ActiveXObject("Scripting.FileSystemObject");
-			var file = object.GetFile(srcFile);
-			file.Move(dest);
-			document.write("File is moved successfully");
-
-		}
 		//display admin options
 		document.getElementById("admin").addEventListener("click", function () {
 			var user1 = "admin";
@@ -155,7 +152,7 @@ var start = function () {
 		});
 		//help button
 		document.getElementById("help").addEventListener("click", function () {
-			$('#page-wrapper').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>About</h4>On page refresh - Sign in as admin and click "delete DB" button.<br> sign in again to upload stopList files by clicking "choose file" and then "upload file".<br>After stopList is uploaded, start uploading files in the same way.<br>Search Options::<br> - single_word<br> - word1 || word2 (word1 OR word2) <br> - word1 && word2 (word1 AND word2))<br> - !word (not operator) <br> - (w1 && w2) || w3 <br>w1 ||(w2 || w3)<br> - ! (w1 && w2)<br></pre> </div>');
+			$('#page-wrapper').append('<div id="liteboxInfo"> <button id="exitInfoDetails" href="#">X</button> <pre id = "helpPre"><h4>About</h4>On page refresh - Sign in as admin and click "delete DB" button.<br> sign in again to upload stopList files by clicking "choose file" and then "upload file".<br>After stopList is uploaded, start uploading files in the same way.<br>Search Options::<br> - single_word<br> - word1 || word2 (word1 OR word2) <br> - word1 && word2 (word1 AND word2))<br> - !word (not operator) <br> - (w1 && w2) || w3 <br> - w1 ||(w2 || w3)<br> - ! (w1 && w2)<br></pre> </div>');
 			$('#liteboxInfo').fadeIn();
 			$('#exitInfoDetails').click(function () {
 				$('#liteboxInfo').fadeOut(function () {
@@ -163,12 +160,12 @@ var start = function () {
 				});
 			});
 		});
-		//add one documents to Db
+		//add one document to Db
 		document.getElementById("addOneFile").addEventListener("click", function () {
-			//splite the string  to word
+
 			var words = splitToWord(string);
-			//var idCounter = localStorage.getItem("idCounter");
-			//array with unique word not duplicate
+			alert(words);
+			//unique words array
 			var uniqueArr = uniqueWordFunc(words);
 			//the number of performances
 			var perf = performances(words);
@@ -177,16 +174,13 @@ var start = function () {
 					addIndexFile(idCounter, uniqueArr[j], perf[uniqueArr[j]]);
 				}
 			}
-			addDocument(idCounter, nameDoc, nameAuthor, ("file:///C:/Users/Dell/Downloads/" + fileName));
+			addDocument(idCounter, nameDoc, nameAuthor, ("http://127.0.0.1:81/maybe_now/Information%20retrieval/storage/" + fileName));
 			sortAll();
 			downloadFile(fileName, string);
 			var loc = window.location.pathname;
 			var dir = loc.substring(0, loc.lastIndexOf('/'));
-			//alert("C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\" + fileName);
-			//moveFile("C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\source\\" + fileName, "C:\\Users\\Dell\\Desktop\\maybe_now\\information%20retrieval\\storage\\");
-			deleteFile(fileName);
+			$("#fileInput").val('');
 			idCounter++;
-			//localStorage.setItem("idCounter",idCounter);
 		});
 		//delete the data in DB
 		document.getElementById("deleteDB").addEventListener("click", function () {
